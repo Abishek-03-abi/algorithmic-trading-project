@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nubra Trading Dashboard - Simple</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .card { margin: 10px; padding: 15px; }
+        .chart-container { height: 300px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container">
+            <span class="navbar-brand">Nubra Trading Dashboard - Simple Version</span>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="card">
+            <h4>Stock Selection</h4>
+            <select id="stockSelect" class="form-control">
+                <option value="RELIANCE">Reliance Industries</option>
+                <option value="TCS">Tata Consultancy</option>
+            </select>
+            <button class="btn btn-success mt-2" onclick="loadData()">Load Data</button>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <h5>Price Chart</h5>
+                    <div class="chart-container">
+                        <canvas id="priceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <h5>Simple Metrics</h5>
+                    <div id="metrics">Click "Load Data" first</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadData() {
+            try {
+                const response = await fetch('/api/stock/RELIANCE?period=3mo');
+                const data = await response.json();
+                
+                if (data.error) {
+                    document.getElementById('metrics').innerHTML = 'Error: ' + data.error;
+                    return;
+                }
+
+                // Create simple price chart
+                const ctx = document.getElementById('priceChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.dates,
+                        datasets: [{
+                            label: 'Stock Price',
+                            data: data.prices,
+                            borderColor: 'blue'
+                        }]
+                    }
+                });
+
+                // Show basic metrics
+                document.getElementById('metrics').innerHTML = `
+                    <p>Data Points: ${data.prices.length}</p>
+                    <p>Current Price: ₹${data.prices[data.prices.length-1]}</p>
+                    <p>RSI: ${data.rsi ? data.rsi[data.rsi.length-1] : 'N/A'}</p>
+                `;
+
+            } catch (error) {
+                document.getElementById('metrics').innerHTML = 'Error loading data';
+            }
+        }
+
+        // Load initial data
+        loadData();
+    </script>
+</body>
+</html>
