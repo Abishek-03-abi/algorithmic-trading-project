@@ -5,3 +5,6 @@ __pycache__/
 *.pyc
 *.pyo
 .env
+AirDrop
+General
+*.save

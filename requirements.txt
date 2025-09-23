@@ -1,3 +1,8 @@
-streamlit==1.28.0
-pandas==1.5.3
-yfinance==0.2.18
+flask>=2.0.0
+gunicorn>=20.0.0
+pandas>=1.5.3
+numpy>=1.21.0
+yfinance>=0.2.18
+requests>=2.25.0
+ccxt>=1.60.0
+python-dotenv>=0.19.0
