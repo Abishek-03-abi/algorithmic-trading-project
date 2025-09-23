@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from data_fetcher import StockDataFetcher
-from trading_strategies import TradingStrategy
+from trading_strategies import sma_crossover_strategy, run_backtest
 import os
 
 app = Flask(__name__)
