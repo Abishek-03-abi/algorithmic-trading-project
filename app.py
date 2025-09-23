@@ -8,7 +8,6 @@ import os
 
 app = Flask(__name__)
 fetcher = StockDataFetcher()
-# Removed: strategy = TradingStrategy() - using functions directly instead
 
 @app.route('/')
 def index():
