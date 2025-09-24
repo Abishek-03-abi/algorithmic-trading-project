@@ -1,6 +1,6 @@
 # Algorithmic Trading Project  
 
-## Screenshots  
+## Screenshots of the project outcome
 
 ![Screenshot 1](https://github.com/user-attachments/assets/820c3f17-8ba4-4b9d-b137-df3da9c651cd)  
 
